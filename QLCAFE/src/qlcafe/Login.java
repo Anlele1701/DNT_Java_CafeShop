@@ -7,6 +7,7 @@ package qlcafe;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -181,9 +182,15 @@ public class Login extends javax.swing.JFrame {
             {
                Order order = new Order() ;
                 order.setVisible(true);
-              //  crud.setLocationRelativeTo(null);
+                order.setLocationRelativeTo(null);
          //       crud.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Sai thông tin đăng nhập");
+                tfUsername.setText("");
+
             }
         } catch (SQLException ex) {
             System.out.println("Error");
@@ -216,7 +223,6 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
