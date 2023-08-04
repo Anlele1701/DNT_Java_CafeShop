@@ -4,6 +4,8 @@
  */
 package qlcafe;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +21,13 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -32,6 +40,8 @@ public class Beverage extends javax.swing.JFrame {
      */
     public Beverage() {
         initComponents();
+        ShowProducts();
+        setResizable(false);
     }
 
     /**
@@ -55,13 +65,15 @@ public class Beverage extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         tfID = new javax.swing.JTextField();
         tfName = new javax.swing.JTextField();
-        tfCate = new javax.swing.JTextField();
         tfPrice = new javax.swing.JTextField();
         lblPhoto = new javax.swing.JLabel();
         btnUpload = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnFind_CRUD = new javax.swing.JButton();
+        btnClearCRUD = new javax.swing.JButton();
+        cbLoai = new javax.swing.JComboBox<>();
+        btnDel = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -72,7 +84,7 @@ public class Beverage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        pro_table = new javax.swing.JTable();
         tfSearch = new javax.swing.JTextField();
         btnFind = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
@@ -120,8 +132,6 @@ public class Beverage extends javax.swing.JFrame {
 
         tfName.setText(" ");
 
-        tfCate.setText(" ");
-
         tfPrice.setText(" ");
 
         lblPhoto.setText(" ");
@@ -155,31 +165,34 @@ public class Beverage extends javax.swing.JFrame {
             }
         });
 
+        btnClearCRUD.setText("Clear");
+        btnClearCRUD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearCRUDActionPerformed(evt);
+            }
+        });
+
+        cbLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ ăn", "Thức uống", "Khác" }));
+
+        btnDel.setText("Xóa");
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnUpload)
-                        .addGap(248, 248, 248))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(btnFind_CRUD)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAdd))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -190,11 +203,28 @@ public class Beverage extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfID)
                                     .addComponent(tfName)
-                                    .addComponent(tfCate)
-                                    .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                                    .addComponent(cbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btnDel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFind_CRUD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClearCRUD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAdd)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEdit)))
                 .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(173, 173, 173))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnUpload)
+                        .addGap(248, 248, 248))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +244,9 @@ public class Beverage extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(tfCate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +255,9 @@ public class Beverage extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
-                    .addComponent(btnFind_CRUD))
+                    .addComponent(btnFind_CRUD)
+                    .addComponent(btnClearCRUD)
+                    .addComponent(btnDel))
                 .addGap(18, 18, 18))
         );
 
@@ -256,7 +288,7 @@ public class Beverage extends javax.swing.JFrame {
             CRUDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CRUDLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -337,39 +369,39 @@ public class Beverage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel3.setText("QUẢN LÝ THỰC ĐƠN");
 
-        jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pro_table.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        pro_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Hình ảnh", "Loại", "Tên Món", "Đơn Giá"
+                "ID", "Hình ảnh", "Tên Món", "Loại", "Giá"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Byte.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -380,11 +412,16 @@ public class Beverage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setShowGrid(true);
-        jScrollPane1.setViewportView(jTable1);
+        pro_table.setShowGrid(true);
+        jScrollPane1.setViewportView(pro_table);
 
         tfSearch.setForeground(new java.awt.Color(204, 204, 204));
         tfSearch.setText("Nhập vào từ khóa bạn cần tìm kiếm...");
+        tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfSearchKeyReleased(evt);
+            }
+        });
 
         btnFind.setText("Tìm kiếm");
 
@@ -404,15 +441,6 @@ public class Beverage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(233, 233, 233))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -423,7 +451,16 @@ public class Beverage extends javax.swing.JFrame {
                                 .addComponent(btnFind)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnClear)))
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(233, 233, 233))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,7 +473,7 @@ public class Beverage extends javax.swing.JFrame {
                     .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFind)
                     .addComponent(btnClear))
-                .addGap(28, 28, 28)
+                .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnOpen)
@@ -456,11 +493,8 @@ public class Beverage extends javax.swing.JFrame {
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
         // TODO add your handling code here:
          CRUD.setSize(600, 800);
-
         CRUD.setVisible(true);
-
     }//GEN-LAST:event_btnOpenActionPerformed
-
     private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
         // TODO add your handling code here:
         JFileChooser chooser=new JFileChooser();
@@ -477,7 +511,6 @@ public class Beverage extends javax.swing.JFrame {
             Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnUploadActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         MyConnection con = new MyConnection();
@@ -486,7 +519,8 @@ public class Beverage extends javax.swing.JFrame {
         String id = String.valueOf(tfID.getText().trim());
         String name = String.valueOf(tfName.getText().trim());
         int price = Integer.parseInt(tfPrice.getText().trim());
-        String cate = String.valueOf(tfCate.getText().trim());
+//        String cate = String.valueOf(tfCate.getText().trim());
+        String cate = cbLoai.getSelectedItem().toString();
         String query = "insert into product values(?,?,?,?,?)";
   try
         {
@@ -499,7 +533,8 @@ public class Beverage extends javax.swing.JFrame {
             ps.setBlob(5, is);         
             ps.executeUpdate();
             JOptionPane.showMessageDialog(this,"Thêm dữ liệu thành công");
-            
+            CRUD.setVisible(false);
+            ShowProducts();
         } 
         catch(SQLException ex)
         {
@@ -512,49 +547,128 @@ public class Beverage extends javax.swing.JFrame {
 public void getClear()
 {
     tfID.setText("");
-    tfCate.setText("");
+    cbLoai.setSelectedItem(null);
     tfName.setText("");
     tfPrice.setText("");
+}
+class ImageRenderer extends DefaultTableCellRenderer {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (value instanceof ImageIcon) {
+            // Hiển thị hình ảnh trong cột
+            setIcon((ImageIcon) value);
+            setHorizontalAlignment(JLabel.CENTER);
+            setVerticalAlignment(JLabel.CENTER);
+            setOpaque(true);
+            setBackground(Color.WHITE); // Cài đặt nền cho JLabel là màu trắng
+        } else {
+            // Nếu không phải hình ảnh, hiển thị giá trị mặc định của TableCellRenderer
+            setText((value != null) ? value.toString() : "");
+        }
+        return this;
+    }
+}
+// Đặt TableCellRenderer cho cột chứa hình ảnh (ví dụ: cột thứ 3)
+
+public void ShowProducts()
+{
+   String sql = "Select * from product";
+    try{
+               MyConnection con = new MyConnection();
+               PreparedStatement ps;
+               ps = con.getConnection().prepareStatement(sql);
+               ResultSet rs;
+               rs = ps.executeQuery();
+               DefaultTableModel model = (DefaultTableModel)pro_table.getModel();            
+               pro_table.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer());
+               //canh giữa
+               DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+               centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+               pro_table.setDefaultRenderer(String.class, centerRenderer);
+               model.setRowCount(0);
+               pro_table.setRowHeight(60);
+               while (rs.next()) {
+            byte[] imageBytes = rs.getBytes("Image");
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon(imageBytes).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+            model.addRow(new Object[]{
+                rs.getString("ID_SP"),                
+                imageIcon,
+                rs.getString("TenSP"),
+               rs.getString("Loai"),
+                rs.getString("GiaSP")
+            });
+        }
+    }
+    catch (Exception e)
+    {
+        e.printStackTrace();
+    }
+}
+public void Search(String str)
+{
+    DefaultTableModel model = (DefaultTableModel) pro_table.getModel();
+    TableRowSorter<DefaultTableModel>trs = new TableRowSorter<>(model);
+    pro_table.setRowSorter(trs);
+    trs.setRowFilter(RowFilter.regexFilter(str));
 }
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         MyConnection con = new MyConnection();
         PreparedStatement ps;
         ResultSet rs;
-       
   try
         { 
         String id = String.valueOf(tfID.getText().trim());
         String name = String.valueOf(tfName.getText().trim());
         int price = Integer.parseInt(tfPrice.getText().trim());
-        String cate = String.valueOf(tfCate.getText().trim());
-        String query = "update product set TenSP = ? WHERE ID_SP =?";
+//        String cate = String.valueOf(tfCate.getText().trim());
+        String cate = cbLoai.getSelectedItem().toString();
+        String query = "update product set TenSP = ?, GiaSP =?, Loai =?, Image =?  WHERE ID_SP =?";
             ps = con.getConnection().prepareStatement(query);
             ps.setString(1, name);
-//            ps.setInt(2, price);
-//             ps.setString(3,cate);
-//            InputStream is = new FileInputStream(new File(path2));
-//            ps.setBlob(4, is);           
-            ps.setString(2, id);    
+            ps.setInt(2, price);
+            ps.setString(3,cate);
+            InputStream is = new FileInputStream(new File(path2));
+            ps.setBlob(4, is );
+            ps.setString(5, id);    
             getClear();
             JOptionPane.showMessageDialog(this,"Chỉnh sửa dữ liệu thành công");
-
+            ShowProducts();
+             CRUD.setVisible(false);
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Cập nhật dữ liệu thành công.");
             } else {
                 System.out.println("Không tìm thấy bản ghi cần cập nhật.");
             }
-            
         } 
         catch(SQLException ex)
         {
             JOptionPane.showMessageDialog(this, "Error" + ex);
             ex.printStackTrace();
-        }       
-//                catch (FileNotFoundException ex) {
-//                    Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+        }       catch (FileNotFoundException ex) {       
+                    Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
+                }       
+//              try
+//              {     
+//                         String id = String.valueOf(tfID.getText().trim());
+////                         File file = new File(path2);
+////                         FileInputStream fis = new FileInputStream(file);
+////                         byte[]image =  new byte [(int)file.length()];
+////                         fis.read(image);                       
+//                        String sql = "update product set Image = ? where ID_SP= ?";      
+////                        InputStream is = new FileInputStream(new File(path2));
+//                         ps = con.getConnection().prepareStatement(sql);
+//                          InputStream is = new FileInputStream(new File(path2));
+//                         ps.setBlob(1, is);
+//                         ps.setString(2, id );
+//                         ps.executeUpdate();
+//                          ShowProducts();
+//                          CRUD.setVisible(false);
+//              }
+//              catch(Exception e)
+//              {
+//                  e.printStackTrace();
+//              }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnFind_CRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind_CRUDActionPerformed
@@ -572,7 +686,8 @@ public void getClear()
             {
                  tfName.setText(rs.getString("TenSP"));
                 tfPrice.setText(rs.getString("GiaSP"));
-                tfCate.setText(rs.getString("Loai"));
+//              tfCate.setText(rs.getString("Loai"));
+                cbLoai.setSelectedItem(rs.getString("Loai"));
                 byte[] image = rs.getBytes("Image");
                 ImageIcon imageIcon = new ImageIcon(new ImageIcon(image).getImage().getScaledInstance(lblPhoto.getWidth(), lblPhoto.getHeight(), Image.SCALE_SMOOTH));
                 lblPhoto.setIcon(imageIcon);
@@ -586,6 +701,41 @@ public void getClear()
             JOptionPane.showMessageDialog(this, "Error" + ex);
         }
     }//GEN-LAST:event_btnFind_CRUDActionPerformed
+
+    private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
+        // TODO add your handling code here:
+        String searchString = tfSearch.getText();
+        Search(searchString);
+    }//GEN-LAST:event_tfSearchKeyReleased
+
+    private void btnClearCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearCRUDActionPerformed
+        // TODO add your handling code here:
+        getClear();
+        lblPhoto.setIcon(null);
+    }//GEN-LAST:event_btnClearCRUDActionPerformed
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        // TODO add your handling code here:
+          MyConnection con = new MyConnection();
+        PreparedStatement ps;
+        ResultSet rs;
+        String id = String.valueOf(tfID.getText().trim());
+        String query ="delete from product where id_sp =?";
+        try
+        {
+            ps=con.getConnection().prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+            getClear();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+            CRUD.setVisible(false);
+            ShowProducts();
+        }
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Error" +ex);
+        }
+    }//GEN-LAST:event_btnDelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -626,12 +776,15 @@ public void getClear()
     private javax.swing.JFrame CRUD;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnClearCRUD;
+    private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFind;
     private javax.swing.JButton btnFind_CRUD;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnUpload;
+    private javax.swing.JComboBox<String> cbLoai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -650,9 +803,8 @@ public void getClear()
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblPhoto;
-    private javax.swing.JTextField tfCate;
+    private javax.swing.JTable pro_table;
     private javax.swing.JTextField tfID;
     private javax.swing.JTextField tfName;
     private javax.swing.JTextField tfPrice;
