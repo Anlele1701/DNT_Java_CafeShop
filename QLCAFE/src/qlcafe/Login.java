@@ -4,6 +4,7 @@
  */
 package qlcafe;
 
+import Model.NHANVIEN;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -120,7 +121,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
@@ -180,6 +181,16 @@ public class Login extends javax.swing.JFrame {
             rs = ps.executeQuery();
             if (rs.next())
             {
+                NHANVIEN nv =new NHANVIEN();
+                nv.IDNV = rs.getString("IDNV");
+                nv.HoVaTen = rs.getString("HoVaTen");
+                nv.SDT = rs.getString("SDT");
+                nv.CCCD= rs.getString("CCCD");
+                nv.Email = rs.getString("Email");
+                nv.DiaChi = rs.getString("DiaChi");
+                nv.ChucVu = rs.getString("ChucVu");
+                nv.GioiTinh = rs.getString("GioiTinh");
+                nv.MatKhau = rs.getString("MatKhau");
                Order order = new Order() ;
                 order.setVisible(true);
                 order.setLocationRelativeTo(null);

@@ -594,7 +594,7 @@ public void ShowProducts()
                 imageIcon,
                 rs.getString("TenSP"),
                rs.getString("Loai"),
-                rs.getString("GiaSP")
+                String.format("%,d",rs.getInt("GiaSP") )+"VND"
             });
         }
     }
