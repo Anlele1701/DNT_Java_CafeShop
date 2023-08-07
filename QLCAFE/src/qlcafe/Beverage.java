@@ -76,7 +76,7 @@ public class Beverage extends javax.swing.JFrame {
         btnDel = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblOrder = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -297,10 +297,15 @@ public class Beverage extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/java.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(236, 236, 236));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/order_cam.png"))); // NOI18N
-        jLabel2.setText("Đặt Món");
+        lblOrder.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblOrder.setForeground(new java.awt.Color(236, 236, 236));
+        lblOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/order_cam.png"))); // NOI18N
+        lblOrder.setText("Đặt Món");
+        lblOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblOrderMouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(223, 125, 54));
@@ -338,7 +343,7 @@ public class Beverage extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,7 +357,7 @@ public class Beverage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jLabel2)
+                .addComponent(lblOrder)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel4)
                 .addGap(26, 26, 26)
@@ -737,6 +742,14 @@ public void Search(String str)
         }
     }//GEN-LAST:event_btnDelActionPerformed
 
+    private void lblOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOrderMouseClicked
+        // TODO add your handling code here:
+        Order or = new Order();
+        this.dispose();
+        or.setVisible(true);
+        or.setLocationRelativeTo(null);
+    }//GEN-LAST:event_lblOrderMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -790,7 +803,6 @@ public void Search(String str)
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -803,6 +815,7 @@ public void Search(String str)
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblOrder;
     private javax.swing.JLabel lblPhoto;
     private javax.swing.JTable pro_table;
     private javax.swing.JTextField tfID;

@@ -22,6 +22,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -191,7 +192,7 @@ public class Login extends javax.swing.JFrame {
                 nv.ChucVu = rs.getString("ChucVu");
                 nv.GioiTinh = rs.getString("GioiTinh");
                 nv.MatKhau = rs.getString("MatKhau");
-               Order order = new Order() ;
+               Order order = new Order(nv) ;
                 order.setVisible(true);
                 order.setLocationRelativeTo(null);
          //       crud.setExtendedState(JFrame.MAXIMIZED_BOTH);
