@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import java.sql.Types;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -617,43 +618,54 @@ public void Search(String str)
 }
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        MyConnection con = new MyConnection();
-        PreparedStatement ps;
-        ResultSet rs;
-  try
-        { 
-        String id = String.valueOf(tfID.getText().trim());
-        String name = String.valueOf(tfName.getText().trim());
-        int price = Integer.parseInt(tfPrice.getText().trim());
-//        String cate = String.valueOf(tfCate.getText().trim());
-        String cate = cbLoai.getSelectedItem().toString();
-        String query = "update product set TenSP = ?, GiaSP =?, Loai =?, Image =?  WHERE ID_SP =?";
-            ps = con.getConnection().prepareStatement(query);
-            ps.setString(1, name);
-            ps.setInt(2, price);
-            ps.setString(3,cate);
-            InputStream is = new FileInputStream(new File(path2));
-            ps.setBlob(4, is );
-            ps.setString(5, id);    
-            getClear();
-            JOptionPane.showMessageDialog(this,"Chỉnh sửa dữ liệu thành công");
-            ShowProducts();
-             CRUD.setVisible(false);
-            int rowsUpdated = ps.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Cập nhật dữ liệu thành công.");
-            } else {
-                System.out.println("Không tìm thấy bản ghi cần cập nhật.");
-            }
-        } 
-        catch(SQLException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Error" + ex);
-            ex.printStackTrace();
-        }       catch (FileNotFoundException ex) {       
-                    Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
-                }       
-//              try
+       MyConnection con = new MyConnection();
+PreparedStatement ps;
+ResultSet rs;
+try {
+    String id = String.valueOf(tfID.getText().trim());
+    String name = String.valueOf(tfName.getText().trim());
+    int price = Integer.parseInt(tfPrice.getText().trim());
+    String cate = cbLoai.getSelectedItem().toString();
+
+    String query;
+    if (path2 != null) { // Kiểm tra xem có chọn hình ảnh mới hay không
+        query = "update product set TenSP = ?, GiaSP =?, Loai =?, Image =?  WHERE ID_SP =?";
+    } else {
+        query = "update product set TenSP = ?, GiaSP =?, Loai =? WHERE ID_SP =?";
+    }
+
+    ps = con.getConnection().prepareStatement(query);
+    ps.setString(1, name);
+    ps.setInt(2, price);
+    ps.setString(3, cate);
+    
+    if (path2 != null) { // Nếu có hình ảnh mới, cập nhật hình ảnh
+        InputStream is = new FileInputStream(new File(path2));
+        ps.setBlob(4, is);
+        ps.setString(5, id);
+    } else {
+        ps.setString(4, id);
+    }
+    
+    getClear();
+    JOptionPane.showMessageDialog(this, "Chỉnh sửa dữ liệu thành công");
+    CRUD.setVisible(false);
+    
+    int rowsUpdated = ps.executeUpdate();   
+    ShowProducts();
+
+    if (rowsUpdated > 0) {
+        System.out.println("Cập nhật dữ liệu thành công.");
+    } else {
+        System.out.println("Không tìm thấy bản ghi cần cập nhật.");
+    }
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Error" + ex);
+    ex.printStackTrace();
+} catch (FileNotFoundException ex) {
+    Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
+}
+
 //              {     
 //                         String id = String.valueOf(tfID.getText().trim());
 ////                         File file = new File(path2);

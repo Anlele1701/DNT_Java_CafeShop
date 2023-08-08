@@ -33,8 +33,7 @@ public class Order extends javax.swing.JFrame {
 public Order(NHANVIEN nv) {
         initComponents();     
         id=nv.IDNV;
-        tfTest.setText(nv.IDNV);
-                ShowProducts();
+         ShowProducts();
 
     }
     /**
