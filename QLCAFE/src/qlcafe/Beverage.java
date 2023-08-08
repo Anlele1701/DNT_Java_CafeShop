@@ -83,11 +83,9 @@ public class Beverage extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pro_table = new javax.swing.JTable();
         tfSearch = new javax.swing.JTextField();
-        btnFind = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnOpen = new javax.swing.JButton();
 
@@ -293,6 +291,7 @@ public class Beverage extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(71, 72, 83));
 
@@ -300,7 +299,7 @@ public class Beverage extends javax.swing.JFrame {
 
         lblOrder.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblOrder.setForeground(new java.awt.Color(236, 236, 236));
-        lblOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/order_cam.png"))); // NOI18N
+        lblOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/order_trang.png"))); // NOI18N
         lblOrder.setText("Đặt Món");
         lblOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -367,13 +366,10 @@ public class Beverage extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(21, 21, 21))
         );
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel3.setText("QUẢN LÝ THỰC ĐƠN");
 
         pro_table.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         pro_table.setModel(new javax.swing.table.DefaultTableModel(
@@ -421,7 +417,8 @@ public class Beverage extends javax.swing.JFrame {
         pro_table.setShowGrid(true);
         jScrollPane1.setViewportView(pro_table);
 
-        tfSearch.setForeground(new java.awt.Color(204, 204, 204));
+        tfSearch.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        tfSearch.setForeground(new java.awt.Color(72, 71, 83));
         tfSearch.setText("Nhập vào từ khóa bạn cần tìm kiếm...");
         tfSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -429,10 +426,12 @@ public class Beverage extends javax.swing.JFrame {
             }
         });
 
-        btnFind.setText("Tìm kiếm");
-
+        btnClear.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnClear.setText("Clear");
 
+        btnOpen.setBackground(new java.awt.Color(223, 125, 54));
+        btnOpen.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        btnOpen.setForeground(new java.awt.Color(255, 255, 255));
         btnOpen.setText("Chỉnh sửa thực đơn");
         btnOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,42 +447,30 @@ public class Beverage extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
+                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnOpen)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnFind)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnClear)))
-                        .addGap(0, 14, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(233, 233, 233))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 748, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(btnClear)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
-                .addGap(32, 32, 32)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFind)
+                    .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear))
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(btnOpen)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -804,7 +791,6 @@ try {
     private javax.swing.JButton btnClearCRUD;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnFind_CRUD;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnOpen;
@@ -815,7 +801,6 @@ try {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
