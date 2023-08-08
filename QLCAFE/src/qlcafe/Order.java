@@ -69,6 +69,8 @@ public Order(NHANVIEN nv) {
         btnPrint = new javax.swing.JButton();
         lblPhone = new javax.swing.JLabel();
         tfPhone = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfVoucher = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         pro_table = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
@@ -235,38 +237,70 @@ public Order(NHANVIEN nv) {
         });
 
         lblPhone.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblPhone.setForeground(new java.awt.Color(71, 72, 83));
         lblPhone.setText("Số điện thoại KH:");
+
+        tfPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfPhoneFocusLost(evt);
+            }
+        });
+        tfPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfPhoneKeyReleased(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(71, 72, 83));
+        jLabel3.setText("Tiền trả");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPrint)
-                .addGap(93, 93, 93))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfPay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfChange, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(23, 23, 23)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tfVoucher, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfChange, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                        .addGap(3, 48, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jLabel7)))
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11))
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfPay, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(148, 148, 148)
+                                .addComponent(jLabel7)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPrint)
+                .addGap(103, 103, 103))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,25 +309,29 @@ public Order(NHANVIEN nv) {
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhone)
+                    .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(tfPay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(tfChange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPhone)
-                    .addComponent(tfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pro_table.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -450,6 +488,11 @@ public Order(NHANVIEN nv) {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tblBill.getModel();
+         int selectedRowIndex = pro_table.getSelectedRow();
+        if (selectedRowIndex == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một dòng trong bảng trước khi thêm.");
+        return; // Không thực hiện thêm nếu người dùng chưa chọn dòng
+    }
         String nameToAdd = name;
         int countToAdd = 1;
         int rowIndexToUpdate = -1; // Biến để lưu index của dòng cần cập nhật count
@@ -530,10 +573,24 @@ if (rss.next()) {
     System.out.println(diemTichLuyCu);
     int diemTichLuyMoi = (diemTichLuyCu + (sum/1000)); // Cộng tổng giá mới vào điểm tích lũy cũ
     System.out.println(diemTichLuyMoi);
-    String khUpdate = "UPDATE KHACHHANG SET DiemTichLuy = ? WHERE SDT = ?";
+    String rank = "Thành viên";
+     if(diemTichLuyMoi >500)
+     {
+         rank = "Đồng";
+     }
+     if (diemTichLuyMoi >1000)
+     {
+         rank = "Bạc";
+     }
+     if (diemTichLuyMoi >2000)
+     {
+         rank = "Vàng";
+     }
+    String khUpdate = "UPDATE KHACHHANG SET DiemTichLuy = ?, Hang=? WHERE SDT = ?";
     PreparedStatement khachUpdate = con.getConnection().prepareStatement(khUpdate);
     khachUpdate.setInt(1, diemTichLuyMoi);
-    khachUpdate.setString(2, phone);
+    khachUpdate.setString(2, rank);
+    khachUpdate.setString(3, phone);
     khachUpdate.executeUpdate();
 } 
                   for (int i = 0; i < model.getRowCount(); i++) {
@@ -571,6 +628,98 @@ if (generatedKeys.next()) {
         bev.setVisible(true);
         bev.setLocationRelativeTo(null);
     }//GEN-LAST:event_lblThucDonMouseClicked
+
+    private void tfPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfPhoneFocusLost
+        // TODO add your handling code here:
+//                int voucher =0;
+//        String sdt = String.valueOf(tfPhone.getText().trim());
+//        try
+//        {
+//            MyConnection con = new MyConnection();
+//            String query =  "Select Hang FROM KHACHHANG where SDT = ?";
+//            PreparedStatement ps = con.getConnection().prepareStatement(query);
+//            ps.setString(1, sdt);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next())
+//            {                
+//                double discountPercentage = 0.0;
+//                String hang =rs.getString("Hang");
+//                if (null != hang) 
+//                    switch (hang) {
+//                    case "Đồng":
+//                        discountPercentage = 0.02; // Giảm 2%
+//                        break;
+//                    case "Bạc":
+//                        discountPercentage = 0.04; // Giảm 4%
+//                        break;
+//                    case "Vàng":
+//                        discountPercentage = 0.06; // Giảm 6%
+//                        break;
+//                    default:
+//                        discountPercentage = 0.01;
+//                        break;
+//                }
+//                int tienKM = (int) (sum *discountPercentage);
+//                int tienKMTotal = sum - tienKM;
+//                String formattedTotal = String.format("%,d", tienKMTotal);
+//                        tfVoucher.setText(formattedTotal +"VND");
+//            }
+//            else
+//            {
+//                tfVoucher.setText("0");
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+    }//GEN-LAST:event_tfPhoneFocusLost
+
+    private void tfPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfPhoneKeyReleased
+        // TODO add your handling code here:
+                 int voucher =0;
+        String sdt = String.valueOf(tfPhone.getText().trim());
+        try
+        {
+            MyConnection con = new MyConnection();
+            String query =  "Select Hang FROM KHACHHANG where SDT = ?";
+            PreparedStatement ps = con.getConnection().prepareStatement(query);
+            ps.setString(1, sdt);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+            {                
+                double discountPercentage = 0.0;
+                String hang =rs.getString("Hang");
+                if (null != hang) 
+                    switch (hang) {
+                    case "Đồng":
+                        discountPercentage = 0.02; // Giảm 2%
+                        break;
+                    case "Bạc":
+                        discountPercentage = 0.04; // Giảm 4%
+                        break;
+                    case "Vàng":
+                        discountPercentage = 0.06; // Giảm 6%
+                        break;
+                    default:
+                        discountPercentage = 0.01;
+                        break;
+                }
+                int tienKM = (int) (sum *discountPercentage);
+                int tienKMTotal = sum - tienKM;
+                String formattedTotal = String.format("%,d", tienKMTotal);
+                        tfVoucher.setText(formattedTotal +"VND");
+            }
+            else
+            {
+                tfVoucher.setText("0");
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_tfPhoneKeyReleased
     public void calculateChange() {
         int tienkhachdua = Integer.parseInt(tfPay.getText().trim());
         int total = sum;
@@ -673,6 +822,7 @@ if (generatedKeys.next()) {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -692,6 +842,7 @@ if (generatedKeys.next()) {
     private javax.swing.JTextField tfPay;
     private javax.swing.JTextField tfPhone;
     private javax.swing.JTextField tfTotal;
+    private javax.swing.JTextField tfVoucher;
     private javax.swing.JTextArea txBill;
     // End of variables declaration//GEN-END:variables
 }
