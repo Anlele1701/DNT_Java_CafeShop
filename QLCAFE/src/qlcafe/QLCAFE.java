@@ -16,7 +16,9 @@ public class QLCAFE {
     public static void main(String[] args) {
         // TODO code application logic here
           new  MyConnection().getConnection();
-
+          Login log = new Login();
+          log.setVisible(true);
+          log.setLocationRelativeTo(null);
     }
     
 }

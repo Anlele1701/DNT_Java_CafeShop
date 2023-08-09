@@ -171,7 +171,7 @@ public class Beverage extends javax.swing.JFrame {
             }
         });
 
-        cbLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ ăn", "Thức uống", "Khác" }));
+        cbLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ ăn", "Thức uống", "Tráng miệng" }));
 
         btnDel.setText("Xóa");
         btnDel.addActionListener(new java.awt.event.ActionListener() {
@@ -652,27 +652,6 @@ try {
 } catch (FileNotFoundException ex) {
     Logger.getLogger(Beverage.class.getName()).log(Level.SEVERE, null, ex);
 }
-
-//              {     
-//                         String id = String.valueOf(tfID.getText().trim());
-////                         File file = new File(path2);
-////                         FileInputStream fis = new FileInputStream(file);
-////                         byte[]image =  new byte [(int)file.length()];
-////                         fis.read(image);                       
-//                        String sql = "update product set Image = ? where ID_SP= ?";      
-////                        InputStream is = new FileInputStream(new File(path2));
-//                         ps = con.getConnection().prepareStatement(sql);
-//                          InputStream is = new FileInputStream(new File(path2));
-//                         ps.setBlob(1, is);
-//                         ps.setString(2, id );
-//                         ps.executeUpdate();
-//                          ShowProducts();
-//                          CRUD.setVisible(false);
-//              }
-//              catch(Exception e)
-//              {
-//                  e.printStackTrace();
-//              }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnFind_CRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind_CRUDActionPerformed
@@ -725,6 +704,9 @@ try {
         ResultSet rs;
         String id = String.valueOf(tfID.getText().trim());
         String query ="delete from product where id_sp =?";
+        int opt = JOptionPane.showConfirmDialog(null, "Có chắc muốn xóa không?", "Delete", JOptionPane.YES_NO_OPTION);
+        if (opt ==0)
+        {
         try
         {
             ps=con.getConnection().prepareStatement(query);
@@ -739,6 +721,8 @@ try {
         {
             JOptionPane.showMessageDialog(this, "Error" +ex);
         }
+        }
+        
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void lblOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOrderMouseClicked
