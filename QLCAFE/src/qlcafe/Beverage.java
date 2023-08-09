@@ -150,7 +150,7 @@ public class Beverage extends javax.swing.JFrame {
             }
         });
 
-        btnEdit.setText("Chỉnh sửa");
+        btnEdit.setText("Cập nhật");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);

@@ -4,8 +4,20 @@
  */
 package qlcafe;
 
+import java.awt.BorderLayout;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -16,49 +28,50 @@ public class ThongKe extends javax.swing.JFrame {
     /**
      * Creates new form ThongKe
      */
+    private DefaultPieDataset pieDataSet;
+    private JFreeChart pieChart;
+    private PiePlot piePlot;
+    private ChartPanel chartPanel;
+
     public ThongKe() {
         initComponents();
+        showPieChart();
+        showColumnChart();
+        SumRevenue();
         MyConnection con = new MyConnection();
-        try
-        {
-            String et ="Select COUNT(*) as kh_count from KHACHHANG";
+        try {
+            String et = "Select COUNT(*) as kh_count from KHACHHANG";
             PreparedStatement ps = con.getConnection().prepareStatement(et);
-                   ResultSet rs = ps.executeQuery();
-            if(rs.next())
-            {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
                 int khcount = rs.getInt("kh_count");
-                lblCus.setText(khcount+"");
+                lblCus.setText(khcount + "");
             }
             String nv = "Select COUNT(*) as nv_count from NHANVIEN";
             PreparedStatement nvps = con.getConnection().prepareStatement(nv);
             ResultSet nvrs = nvps.executeQuery();
-            if (nvrs.next())
-            {
+            if (nvrs.next()) {
                 int nvcount = nvrs.getInt("nv_count");
-                lblNV.setText(nvcount+ "");
+                lblNV.setText(nvcount + "");
             }
-             String sp = "Select COUNT(*) as sp_count from PRODUCT";
+            String sp = "Select COUNT(*) as sp_count from PRODUCT";
             PreparedStatement spps = con.getConnection().prepareStatement(sp);
-            ResultSet sprs= spps.executeQuery();
-            if (sprs.next())
-            {
+            ResultSet sprs = spps.executeQuery();
+            if (sprs.next()) {
                 int spcount = sprs.getInt("sp_count");
-                lblSP.setText(spcount+ "");
+                lblSP.setText(spcount + "");
             }
-             String hd = "Select COUNT(*) as hd_count from DONHANG";
+            String hd = "Select COUNT(*) as hd_count from DONHANG";
             PreparedStatement hdps = con.getConnection().prepareStatement(hd);
-            ResultSet hdrs= hdps.executeQuery();
-            if (hdrs.next())
-            {
+            ResultSet hdrs = hdps.executeQuery();
+            if (hdrs.next()) {
                 int hdcount = hdrs.getInt("hd_count");
-                lblOrder.setText(hdcount+ "");
+                lblOrder.setText(hdcount + "");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-               
+
     }
 
     /**
@@ -97,7 +110,13 @@ public class ThongKe extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        pieChartPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        columnChart = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        lblSum = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -341,6 +360,11 @@ public class ThongKe extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jLabel3.setText("Số Lượng Hóa Đơn");
 
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel9.setText("Biểu đồ tròn tổng số lượng");
+
+        pieChartPanel.setLayout(new java.awt.BorderLayout());
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -352,17 +376,24 @@ public class ThongKe extends javax.swing.JFrame {
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
                 .addGap(16, 16, 16))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(pieChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,22 +414,59 @@ public class ThongKe extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(589, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addComponent(pieChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         jTabbedPane1.addTab("Tổng Quát", jPanel3);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        columnChart.setLayout(new java.awt.BorderLayout());
+
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel11.setText("TỔNG DOANH THU TÍNH ĐẾN THỜI ĐIỂM HIỆN TẠI:");
+
+        lblSum.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblSum.setText(" ");
+
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel13.setText("Doanh thu mỗi ngày");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 917, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblSum, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(columnChart, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(320, 320, 320)
+                        .addComponent(jLabel13)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 713, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(lblSum))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(columnChart, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
         );
 
         jTabbedPane1.addTab("Chi Tiết", jPanel4);
@@ -431,7 +499,24 @@ public class ThongKe extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void SumRevenue()
+{
+      MyConnection con = new MyConnection();
+        try {
+            String et = "Select SUM(TONGGIA) as hd from DONHANG";
+            PreparedStatement ps = con.getConnection().prepareStatement(et);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt("hd");
+                String sumTotal = String.format("%,d", count);
+                lblSum.setText(sumTotal +"VND");
+            }
+        }
+            catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+}
     private void lblThucDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThucDonMouseClicked
         // TODO add your handling code here:
         Beverage bev = new Beverage();
@@ -482,10 +567,104 @@ public class ThongKe extends javax.swing.JFrame {
         });
     }
 
+    public void showPieChart() {
+        //    sumOfSP();
+//        for(BanHD item: listSP)
+//        {
+//            pieDataSet.setValue(item.getIdsp(),item.getSlBan());
+//        }       
+        pieDataSet = new DefaultPieDataset();
+        try {
+            MyConnection con = new MyConnection();
+            // Query and count from HOADON table
+            String hoadonQuery = "SELECT COUNT(*) FROM DONHANG";
+            PreparedStatement hoadonStatement = con.getConnection().prepareStatement(hoadonQuery);
+            ResultSet hoadonResultSet = hoadonStatement.executeQuery();
+            if (hoadonResultSet.next()) {
+                int hoadonCount = hoadonResultSet.getInt(1);
+                pieDataSet.setValue("Đơn hàng: " + hoadonCount, hoadonCount);
+
+                String sp = "SELECT COUNT(*) from product";
+                PreparedStatement spps = con.getConnection().prepareStatement(sp);
+                ResultSet sprs = spps.executeQuery();
+                if (sprs.next()) {
+                    int spCount = sprs.getInt(1);
+                    pieDataSet.setValue("Thực đơn: " + spCount, spCount);
+                }
+                String nv = "SELECT COUNT(*) from NHANVIEN";
+                PreparedStatement nvps = con.getConnection().prepareStatement(nv);
+                ResultSet nvrs = nvps.executeQuery();
+                if (nvrs.next()) {
+                    int nvCount = nvrs.getInt(1);
+                    pieDataSet.setValue("Nhân viên: " + nvCount, nvCount);
+                }
+                String kh = "Select COUNT(*) as kh_count from KHACHHANG";
+                PreparedStatement khps = con.getConnection().prepareStatement(kh);
+                ResultSet khrs = khps.executeQuery();
+                if (khrs.next()) {
+                    int khCount = khrs.getInt(1);
+                    pieDataSet.setValue("Khách hàng: " + khCount, khCount);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        pieChart = ChartFactory.createPieChart("", pieDataSet, true, true, false);
+        piePlot = (PiePlot) pieChart.getPlot();
+        chartPanel = new ChartPanel(pieChart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
+        pieChartPanel.removeAll();
+        pieChartPanel.add(chartPanel, BorderLayout.CENTER);
+        chartPanel.validate();
+    }
+
+    public void showColumnChart() {
+        dataset2 = new DefaultCategoryDataset();
+       String query = "SELECT NgayDatHang,TONGGIa FROM DONHANG";
+       MyConnection con = new MyConnection();
+
+
+// Xử lý dữ liệu để tính số lượng đơn hàng mỗi tháng
+HashMap<String, Integer> dailyRevenue = new HashMap<>();
+try{
+    PreparedStatement statement = con.getConnection().prepareStatement(query);
+ResultSet resultSet = statement.executeQuery();
+while (resultSet.next()) {
+    Date date = resultSet.getDate("NgayDatHang");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    String dayKey = sdf.format(date);
+    int revenue = resultSet.getInt("TongGia");
+    dailyRevenue.put(dayKey, dailyRevenue.getOrDefault(dayKey, 1) + revenue);
+}
+}
+catch(Exception e)
+{
+    e.printStackTrace();
+}
+// Thêm dữ liệu vào dataset2
+for (String dayKey : dailyRevenue.keySet()) {
+    int revenue = dailyRevenue.get(dayKey);
+    String revenueTotal = "Doanh thu:" + String.format("%,d", revenue) +"VND";
+    dataset2.addValue(revenue, revenueTotal, dayKey);
+}
+        chart = ChartFactory.createBarChart3D(" ", "", "VND", dataset2, PlotOrientation.VERTICAL,
+                true, true, false);
+        catergoryPlot = chart.getCategoryPlot();
+        chartPanel2 =new ChartPanel(chart);
+        columnChart.add(chartPanel2, BorderLayout.CENTER);
+        columnChart.validate();
+    }
+    private DefaultCategoryDataset dataset2;
+    private JFreeChart chart;
+    private CategoryPlot catergoryPlot;
+    private ChartPanel chartPanel2;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
+    private javax.swing.JPanel columnChart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -493,6 +672,7 @@ public class ThongKe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -510,6 +690,8 @@ public class ThongKe extends javax.swing.JFrame {
     private javax.swing.JLabel lblNV;
     private javax.swing.JLabel lblOrder;
     private javax.swing.JLabel lblSP;
+    private javax.swing.JLabel lblSum;
     private javax.swing.JLabel lblThucDon;
+    private javax.swing.JPanel pieChartPanel;
     // End of variables declaration//GEN-END:variables
 }
